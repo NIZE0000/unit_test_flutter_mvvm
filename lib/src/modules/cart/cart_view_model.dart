@@ -1,12 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:unit_test_flutter/src/data/models/cart_item_model.dart';
+import 'package:unit_test_flutter/src/data/services/cart_service.dart';
 
 class CartViewModel extends ChangeNotifier {
-  final List<CartItemModel> _cartItems = [
-    CartItemModel(id: 1, name: 'Product A', price: 10.0, quantity: 2),
-    CartItemModel(id: 2, name: 'Product B', price: 20.0, quantity: 5),
-    CartItemModel(id: 3, name: 'Product C', price: 15.0, quantity: 3),
-  ];
+  final List<CartItemModel> _cartItems = [];
+
+  // Constructor
+  CartViewModel() {
+    // fetchCartItems();
+  }
+
+  // Method to fetch cart items
+  Future<void> fetchCartItems() async {
+    try {
+      // Use the CartService to get cart items
+      List<CartItemModel> items = await CartService.getCartItems();
+
+      _cartItems.addAll(items); // Use addAll to add items to the existing list
+      notifyListeners();
+    } catch (e) {
+      // Handle errors or exceptions as needed
+      // print('Error in CartViewModel: $e');
+    }
+  }
 
   // Get the list of cart items
   List<CartItemModel> get cartItems => _cartItems;

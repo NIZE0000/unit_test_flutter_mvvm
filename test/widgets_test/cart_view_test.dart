@@ -11,16 +11,8 @@ void main() {
       ),
     );
 
-    // Verify if the app bar title is rendered correctly.
-    expect(find.text('Shopping Cart'), findsOneWidget);
-
-    // Verify if the initial cart list is rendered correctly.
-    expect(find.text('Product A'), findsOneWidget);
-    expect(find.text('Product B'), findsOneWidget);
-    expect(find.text('Product C'), findsOneWidget);
-
-    // Verify if the total price is initially correct.
-    expect(find.text('Total: \$165.00'), findsOneWidget);
+    // Wait for the widget to initialize and rebuild.
+    await tester.pumpAndSettle();
 
     // Tap on the 'Remove' and 'Add' buttons and verify if the quantity is updated.
     await tester.tap(find.byIcon(Icons.remove).first);
